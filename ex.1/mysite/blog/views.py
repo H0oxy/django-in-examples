@@ -1,7 +1,9 @@
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
+from .forms import EmailPostForm
 from .models import Post
 
 
@@ -29,3 +31,21 @@ class PostListView(ListView):
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog/post/list.html'
+
+
+def post_share(request, post_id):
+    # Получение статьи по идентификатору.
+    post = get_object_or_404(Post, id=post_id, status='published')
+    sent = False
+    if request.method == 'POST':  # Форма была отправлена на сохранение.
+        form = EmailPostForm(request.POST)
+        if form.is_valid():  # Все поля формы прошли валидацию.
+            cd = form.cleaned_data  # Отправка электронной почты.
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = '{} ({}) recommends you reading "{}"'.format(cd['name'], cd['email'], post.title)
+            message = 'Read "{}" at {}\n\n{}\'s comments:{}'.format(post.title, post_url, cd['name'], cd['comments'])
+            send_mail(subject, message, 'admin@myblog.com', [cd['to']])
+            sent = True
+        else:
+            form = EmailPostForm()
+            return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
