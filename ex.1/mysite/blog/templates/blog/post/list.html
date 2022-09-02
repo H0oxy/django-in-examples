@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
 {% block title %}My Blog{% endblock %}
 
 {% block content %}
@@ -24,7 +25,7 @@
     </p>
 
     <h6 class="card-subtitle mb-2 text-muted">{{ post.author }} {{ post.publish|truncatewords:10|linebreaks }}</h6>
-    <p class="card-text">{{ post.body|truncatewords:30|linebreaks }}</p>
+    <p class="card-text">{{ post.body|markdown|truncatewords_html:30 }}</p>
   </div>
 </div>
 {% endfor %}
