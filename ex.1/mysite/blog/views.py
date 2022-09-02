@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 
-from .forms import EmailPostForm
+from .forms import EmailPostForm, CommentForm
 from .models import Post
 
 
@@ -23,7 +23,20 @@ def post_list(request):
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post, status='published', publish__year=year,
                              publish__month=month, publish__day=day)
-    return render(request, 'blog/post/detail.html', {'post': post})
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    if request.method == 'POST':                            # Пользователь отправил комментарий.
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():                         # Создаем комментарий, но пока не сохраняем в базе данных.
+            new_comment = comment_form.save(commit=False)   # Привязываем комментарий к текущей статье.
+            new_comment.post = post                         # Сохраняем комментарий в базе данных.
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+    return render(request, 'blog/post/detail.html', {'post': post,
+                                                     'comments': comments,
+                                                     'new_comment': new_comment,
+                                                     'comment_form': comment_form})
 
 
 class PostListView(ListView):
