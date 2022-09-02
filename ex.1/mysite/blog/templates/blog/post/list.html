@@ -3,14 +3,14 @@
 
 {% block content %}
 
-<h1>My Blog</h1>
+<h1 class="text-center">My Blog</h1>
 
 {% if tag %}
   <h2>Posts tagged with "{{ tag.name }}"</h2>
 {% endif %}
 
 {% for post in posts %}
-<div class="card m-3" style="width: 18rem;">
+<div class="card" style="width: 32rem; margin-left: auto; margin-right: auto; margin-top: 25px; margin-bottom: 25px;">
   <div class="card-body">
     <h5 class="card-title"><a href="{{ post.get_absolute_url }}" class="">{{ post.title }}</a></h5>
     <p class="tags">
@@ -21,7 +21,7 @@
         </a>
         {% if not forloop.last %}, {% endif %}
       {% endfor %}
-</p>
+    </p>
 
     <h6 class="card-subtitle mb-2 text-muted">{{ post.author }} {{ post.publish|truncatewords:10|linebreaks }}</h6>
     <p class="card-text">{{ post.body|truncatewords:30|linebreaks }}</p>
