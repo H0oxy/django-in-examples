@@ -15,18 +15,20 @@
     <h5>{{ total_comments }} comment{{ total_comments|pluralize }}</h5>
 {% endwith %}
 
+
+
 {% for comment in comments %}
-    <div class="comment">
+    <div class="comment card p-1 m-2">
     <p class="info">
-        Comment {{ forloop.counter }} by {{ comment.name }}
+        {{ comment.name }} {{ forloop.counter }}
         {{ comment.created }}
     </p>
         {{ comment.body|linebreaks }}
     </div>
-
 {% empty %}
     <p>Комментариев пока-что нет :(</p>
 {% endfor %}
+
 
 {% if new_comment %}
     <h2>Your comment has been added.</h2>
