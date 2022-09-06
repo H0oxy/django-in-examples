@@ -15,7 +15,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:product_list_by_category', args=[self.slug])
+        return reverse('account:product_list_by_category', args=[self.slug])
 
 
 class Product(models.Model):
@@ -30,7 +30,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse('shop:product_detail', args=[self.id, self.slug])
+        return reverse('account:product_detail', args=[self.id, self.slug])
 
     class Meta:
         ordering = ('name',)
