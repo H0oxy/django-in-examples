@@ -6,6 +6,7 @@
 {% block content %}
 
 <h1 class="text-center">Log-in</h1>
+<hr>
 {% if form.errors %}
     <p>Your username and password didn't match.Please try again.</p>
 {% else %}
@@ -18,7 +19,7 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}" />
 
-        <input type="submit" value="Login" class="btn btn-dark-outline">
+        <input type="submit" value="Login" class="btn btn-dark">
     </form>
 </div>
 
