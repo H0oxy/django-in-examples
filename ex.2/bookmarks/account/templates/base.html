@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="#">Bookmarks</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Переключатель навигации">
@@ -44,7 +44,18 @@
 </nav>
 
 
-
+{% if messages %}
+<div class="text-center rounded bg-secondary container p-3 text-light">
+    <div class="messages">
+        {% for message in messages %}
+            <div class="{{ message.tags }} ">
+                {{ message|safe }}
+                <a href="#" class="close link-light">x</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
 
 <div class="p-2">
