@@ -8,5 +8,6 @@
 <h1 class="text-center">Dashboard</h1>
 <hr>
 <p>Welcome to your dashboard.</p>
-
+<a href="{% url 'edit' %}" class="btn btn-dark mb-2">edit your profile</a><br>
+<a href="{% url 'password_change' %}" class="btn btn-dark">change your password</a>
 {% endblock %}

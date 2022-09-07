@@ -10,7 +10,7 @@
 {% if form.errors %}
     <p>Your username and password didn't match.Please try again.</p>
 {% else %}
-    <p>Please, use the following form to login:</p>
+    <p>Please, use the following form to log-in. If you don't have an account </p>
 {% endif %}
 
 <div class="login-form">
@@ -20,6 +20,8 @@
         <input type="hidden" name="next" value="{{ next }}" />
 
         <input type="submit" value="Login" class="btn btn-dark">
+        <a href="{% url 'register' %}" class="btn btn-dark-outline">Create account</a>
+
     </form>
 </div>
 
