@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-lk^!qlga)1ikia)7u-cvu02z5$tod_usc^f1%cmqxnm#a(v8#d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+    'social_core.backends.google.GoogleOAuth2'
+
+]
+
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = 'E1sTIjy3Wjmjsx8Mp3CX'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'f39e3da9f39e3da9f39e3da991f08ea1b4ff39ef39e3da9908683e2f93bd8ef3506dc4e'
+SOCIAL_AUTH_VK_SCOPE = ['email', 'name']

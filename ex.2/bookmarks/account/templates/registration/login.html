@@ -5,6 +5,7 @@
 
 {% block content %}
 
+
 <h1 class="text-center">Log-in</h1>
 <hr>
 {% if form.errors %}
@@ -21,8 +22,25 @@
 
         <input type="submit" value="Login" class="btn btn-dark">
         <a href="{% url 'register' %}" class="btn btn-dark-outline">Create account</a>
-
     </form>
 </div>
+
+
+<div class="social">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="YOUR_CLIENT_ID"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <li class="google">
+<a href="{% url "social:begin" "google-oauth2" %}">
+Login with Google
+</a>
+</li>
+</div>
+
+
 
 {% endblock %}
