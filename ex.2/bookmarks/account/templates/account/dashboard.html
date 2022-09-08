@@ -7,7 +7,14 @@
 
 <h1 class="text-center">Dashboard</h1>
 <hr>
-<p>Welcome to your dashboard.</p>
-<a href="{% url 'edit' %}" class="btn btn-dark mb-2">edit your profile</a><br>
-<a href="{% url 'password_change' %}" class="btn btn-dark">change your password</a>
+
+{% with total_images_created=request.user.images_created.count %}
+    <p>Welcome to your dashboard. You have bookmarked
+        <b class="rounded-5 p-1 bg-dark text-light">{{total_images_created }}</b> image {{ total_images_created|pluralize }}</p>
+{% endwith %}
+<p>Drag the following button to your bookmarks toolbar to bookmark images from other websites<br>
+
+<a class="btn btn-dark m-1" href="javascript:{% include 'bookmarklet_launcher.js' %}">Bookmark it</a><br>
+<a href="{% url 'edit' %}" class="btn btn-dark m-1">edit your profile</a><br>
+<a href="{% url 'password_change' %}" class="btn btn-dark m-1">change your password</a>
 {% endblock %}
