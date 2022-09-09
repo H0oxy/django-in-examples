@@ -32,7 +32,7 @@
     </a>
     {{ image.description|linebreaks }}
 </div>
-    <div class="p-1 ">
+    <div class="p-1">
         {% for user in image.users_like.all %}
             <img src="{{ user.profile.photo.url }}" style="width: 2.5rem; height: 2.5rem; margin: 3px" class="rounded-5">
             {{ user.first_name }}
