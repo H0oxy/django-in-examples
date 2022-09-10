@@ -9,7 +9,7 @@
     {% load thumbnail %}
     {% thumbnail image.image "300" as im %}
     <a href="{{ image.image.url }}">
-        <img src="{{ im.url }}" class="rounded shadow" style="object-fit: contain; width: 30rem;">
+        <img src="{{ im.url }}" class="rounded-start shadow" style="object-fit: contain; width: 30rem;">
     </a>
     {% endthumbnail %}
 </div>

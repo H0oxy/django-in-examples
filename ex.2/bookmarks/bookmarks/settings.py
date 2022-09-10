@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,3 +150,8 @@ AUTHENTICATION_BACKENDS = [
 SOCIAL_AUTH_VK_OAUTH2_KEY = 'E1sTIjy3Wjmjsx8Mp3CX'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'f39e3da9f39e3da9f39e3da991f08ea1b4ff39ef39e3da9908683e2f93bd8ef3506dc4e'
 SOCIAL_AUTH_VK_SCOPE = ['email', 'name']
+
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
+}

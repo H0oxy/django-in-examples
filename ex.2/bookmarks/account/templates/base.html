@@ -28,7 +28,7 @@
             </div>
 
             <div class="selected nav-item" {% if section == "people" %} {% endif %}>
-                <a href="#" class="nav-link">People</a>
+                <a href="{% url 'user_list' %}" class="nav-link">People</a>
             </div>
           {% endif %}
       </div>
