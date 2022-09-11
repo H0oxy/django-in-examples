@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'images',
+    'actionss',
     'social_django',
     'sorl.thumbnail',
 

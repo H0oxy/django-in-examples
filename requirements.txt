@@ -1,2 +1,5 @@
 django~=4.1
 Markdown~=3.4.1
+blog~=1.0.1
+common~=0.1.2
+actions~=1.0.3
