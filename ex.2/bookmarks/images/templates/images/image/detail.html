@@ -16,11 +16,16 @@
 {% with total_likes=image.users_like.count users_like=image.users_like.all %}
 <div style="float: right; margin-right: 24rem" class="rounded pt-4">
      <div>
-        <span class="count border border-dark p-2 rounded-5" style="margin-right:1rem;">
-         <span class="total" >{{ total_likes }}</span>
+        <span class="count border border-dark p-2 rounded-2" style="margin-right:1rem;">
+            {{ total_views }} view{{ total_views|pluralize }}
+        </span>
+         <span class="count border border-dark p-2 rounded-2" style="margin-right:1rem;">
+         <span class="total">{{ total_likes }}</span>
          like{{ total_likes|pluralize }}
         </span>
-        <a href="#" style="margin-top: -5px;" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like btn button link-dark rounded-5">
+
+
+        <a href="#" style="margin-top: -5px;" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like btn button link-dark rounded-2">
           {% if request.user not in users_like %}
             Like
           {% else %}
