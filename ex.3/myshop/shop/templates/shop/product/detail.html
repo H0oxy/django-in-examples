@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+
+{% load static %}
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="product-detail">
+
+    <img class="float-start pe-4" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+
+<h1 class="text-center">{{ product.name }}</h1>
+<h4 class="">
+    <i><a class="link-secondary" href="{{ product.category.get_absolute_url }}">{{product.category }}</a></i>
+    ${{ product.price }}
+</h4>
+<div style="float:right;">
+    {{ product.description|linebreaks }}
+</div>
+</div>
+<div class="btn btn-dark rounded-0" style="margin-top: 5px;width: 25rem">Купить</div>
+{% endblock %}

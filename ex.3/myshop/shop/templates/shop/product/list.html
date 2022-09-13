@@ -2,33 +2,42 @@
 {% load static %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}Products{% endif %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
 {% endblock %}
 {% block content %}
 <div id="sidebar">
-    <h3>Categories</h3>
-    <ul>
-        <li {% if not category %} class="selected" {% endif %}>
-            <a href="{% url 'shop:product_list' %}">All</a>
-        </li>
-        {% for c in categories %}
-            <li {% if category.slug == c.slug %} class="selected" {% endif %}>
-                <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
-<div id="main" class="product-list">
-    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
-    {% for product in products %}
-        <div class="item">
-            <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.image %}{{ product.image.url }} {% else %}{% static 'img/no_image.png' %}{% endif %}">
-            </a>
-                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-            <br>
-            ${{ product.price }}
-        </div>
+<h3 class="">Categories</h3>
+
+<ul class="list-group float-start" style="width: 13rem; height: 100%; margin-right: 4px; margin-top: 0.8rem;">
+    <li class="list-group-item list-group-item-action list-group-item-light {% if not category %}active{% endif %} " {% if not category %}{% endif %}>
+        <a href="{% url 'shop:product_list' %}" class="{% if not category %}link-light {% else %} link-dark {% endif %}" style="text-decoration: none;">All</a>
+    </li>
+    {% for c in categories %}
+    <li class="list-group-item list-group-item-action list-group-item-light {% if category %}active link-light{% endif %}" {% if category.slug == c.slug %} {% endif %}>
+        <a href="{{ c.get_absolute_url }}" class="{% if category %}link-light {% else %} link-dark {% endif %}" style="text-decoration: none;">{{ c.name }}</a>
+    </li>
     {% endfor %}
+</ul>
 </div>
+
+
+<div id="main" class="text-center product-list float-top" style="margin-top: -3rem">
+<h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+</div>
+
+
+{% for product in products %}
+    <div class="card" style="width: 12rem; float: left; margin: 4px;">
+            <a href="{{ product.get_absolute_url }}" style="text-decoration: none;">
+                <img class="rounded-top" style="margin-left:-1px; width: 12rem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static '/img/no_image.png' %}{% endif %}">
+            </a>
+      <div class="card-body shadow">
+            <a href="{{ product.get_absolute_url }}" class="link-dark">{{ product.name }}</a>
+          <span class="total" style="float: right">
+              ${{ product.price }}
+          </span>
+      </div>
+    </div>
+{% endfor %}
+
 {% endblock %}
