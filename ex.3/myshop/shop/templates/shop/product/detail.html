@@ -7,18 +7,26 @@
 
 {% block content %}
 
-<div class="product-detail">
 
-    <img class="float-start pe-4" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+<div class="card mb-3 p-2" style="">
+  <div class="row g-0">
+    <div class="col-md-4">
+        <img class="" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+    <form action="{% url "cart:cart_add" product.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-dark rounded-0 mt-2" value="Add to cart {{ product.price }}₽">
+        {{ cart_product_form }}
+    </form>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+          <small class="text-muted float-end"><a class="link-secondary" href="{{ product.category.get_absolute_url }}">{{product.category }}</a></small>
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description|linebreaks }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1 class="text-center">{{ product.name }}</h1>
-<h4 class="">
-    <i><a class="link-secondary" href="{{ product.category.get_absolute_url }}">{{product.category }}</a></i>
-    ${{ product.price }}
-</h4>
-<div style="float:right;">
-    {{ product.description|linebreaks }}
-</div>
-</div>
-<div class="btn btn-dark rounded-0" style="margin-top: 5px;width: 25rem">Купить</div>
+
 {% endblock %}
