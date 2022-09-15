@@ -36,7 +36,19 @@
 
 
 <div class="text-end text-light bg-secondary p-2 container-fluid">
-    <div class="cart">Your cart is empty.</div>
+    <div class="cart">
+        {% with total_items=cart|length %}
+            {% if cart|length > 0 %}
+            Your cart:
+            <a href="{% url "cart:cart_detail" %}" class="link-light">
+            {{ total_items }} item{{ total_items|pluralize }},
+            {{ cart.get_total_price }}₽
+            </a>
+            {% else %}
+            Your cart is empty.
+            {% endif %}
+            {% endwith %}
+    </div>
 </div>
 
 

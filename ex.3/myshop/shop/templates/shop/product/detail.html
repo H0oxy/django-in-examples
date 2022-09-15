@@ -8,13 +8,13 @@
 {% block content %}
 
 
-<div class="card mb-3 p-2" style="">
+<div class="card mb-3 p-2 bg-dark text-light" style="">
   <div class="row g-0">
     <div class="col-md-4">
         <img class="" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
     <form action="{% url "cart:cart_add" product.id %}" method="POST">
     {% csrf_token %}
-    <input type="submit" class="btn btn-dark rounded-0 mt-2" value="Add to cart {{ product.price }}₽">
+    <input type="submit" class="btn btn-light-outline text-light rounded mt-2" value="Add to cart {{ product.price }}₽">
         {{ cart_product_form }}
     </form>
     </div>

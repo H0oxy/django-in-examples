@@ -1,0 +1,26 @@
+{% extends "shop/base.html" %}
+{% block title %}
+    Checkout
+{% endblock %}
+
+{% block content %}
+    <h1>Checkout</h1>
+    <div class="bg-secondary text-light p-2 rounded float-end me-3 mt-4">
+        <h3>Your order</h3>
+        <ul>
+            {% for item in cart %}
+                <li>
+                    {{ item.quantity }}x {{ item.product.name }}
+                    <span>{{ item.total_price }}₽</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Total: {{ cart.get_total_price }}₽</p>
+        </div>
+    <form action="." method="POST" class="form-control bg-dark text-light p-4">
+        {{ form.as_p }}
+        <p><input type="submit" value="Place order" class="btn btn-light"></p>
+        {% csrf_token %}
+    </form>
+
+{% endblock %}

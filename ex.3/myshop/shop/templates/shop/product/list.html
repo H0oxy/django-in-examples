@@ -9,12 +9,12 @@
 <h3 class="">Categories</h3>
 
 <ul class="list-group float-start" style="width: 13rem; height: 100%; margin-right: 4px; margin-top: 0.8rem;">
-    <li class="list-group-item" {% if not category %}{% endif %}>
-        <a href="{% url 'shop:product_list' %}" class="link-dark">All</a>
+    <li class="list-group-item bg-secondary" {% if not category %}{% endif %}>
+        <a href="{% url 'shop:product_list' %}" class="link-light">All</a>
     </li>
     {% for c in categories %}
-    <li class="list-group-item " {% if category.slug == c.slug %} {% endif %}>
-        <a href="{{ c.get_absolute_url }}" class="link-dark link-light">{{ c.name }}</a>
+    <li class="list-group-item bg-secondary" {% if category.slug == c.slug %} {% endif %}>
+        <a href="{{ c.get_absolute_url }}" class="link-light link-light">{{ c.name }}</a>
     </li>
     {% endfor %}
 </ul>
@@ -27,13 +27,13 @@
 
 
 {% for product in products %}
-    <div class="card" style="width: 12rem; float: left; margin: 4px;">
+    <div class="card bg-dark" style="width: 12rem; float: left; margin: 4px;">
             <a href="{{ product.get_absolute_url }}" style="text-decoration: none;">
                 <img class="rounded-top" style="margin-left:-1px; width: 12rem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static '/img/no_image.png' %}{% endif %}">
             </a>
       <div class="card-body shadow">
-            <a href="{{ product.get_absolute_url }}" class="link-dark">{{ product.name }}</a>
-          <span class="total" style="float: right">
+            <a href="{{ product.get_absolute_url }}" class="link-light">{{ product.name }}</a>
+          <span class="total text-light" style="float: right">
               {{ product.price }}₽
           </span>
       </div>
