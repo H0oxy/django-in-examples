@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cart',
     'shop',
     'orders',
+    'payment',
 
 ]
 
@@ -135,3 +136,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_SESSION_ID = 'cart'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend',
+
+
+# Настройки Braintree.
+BRAINTREE_MERCHANT_ID = 'wrs35ygpktpgvhp6'   # ID продавца.
+BRAINTREE_PUBLIC_KEY = 'dtxm9xhdbvgq3f9g'    # Публичный ключ.
+BRAINTREE_PRIVATE_KEY = '2c64b817d00209870eb3a7a2af4349eb'   # Секретный ключ.
+from braintree import Configuration, Environment
+Configuration.configure(
+    Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
