@@ -21,7 +21,8 @@
                 <tr>
                     <td>
                         <a href="{{ product.get_absolute_url }}">
-                            <img style="width: 12rem;" class="rounded m-2" src="{% if product.image %}{{ product.image.url }}
+                            <img style="width: 12rem;" class="rounded m-2"
+                                 src="{% if product.image %}{{ product.image.url }}
                             {% else %}{% static "img/no_image.png" %}{% endif %}">
                         </a>
                     </td>
@@ -34,19 +35,46 @@
                             {% csrf_token %}
                         </form>
                     </td>
-                    <td><a href="{% url "cart:cart_remove" product.id %}" class="link-light btn btn-outline bg-gradient">✗</a></td>
+                    <td><a href="{% url "cart:cart_remove" product.id %}"
+                           class="link-light btn btn-outline bg-gradient">✗</a></td>
                     <td class="num">{{ item.price }}₽</td>
                     <td class="num">{{ item.total_price }}₽</td>
                 </tr>
             {% endwith %}
         {% endfor %}
+        {% if cart.coupon %}
+            <tr class="subtotal">
+                <td>Subtotal</td>
+                <td colspan="4"></td>
+                <td class="num">${{ cart.get_total_price|floatformat:"2" }}</td>
+            </tr>
+            <tr>
+                <td>
+                    "{{ cart.coupon.code }}" coupon
+                    ({{ cart.coupon.discount }}% off)
+                </td>
+                <td colspan="4"></td>
+                <td class="num neg">
+                    - ${{ cart.get_discount|floatformat:"2" }}
+                </td>
+            </tr>
+        {% endif %}
         <tr class="total">
             <td style="border-radius: 0 0 0 .5rem ">Total</td>
             <td colspan="4"></td>
-            <td style="border-radius: 0 0 .5rem 0" class="num">{{ cart.get_total_price }}₽</td>
+            <td style="border-radius: 0 0 .5rem 0" class="num">
+                ${{ cart.get_total_price_after_discount|floatformat:'2'}}
+            </td>
         </tr>
         </tbody>
+
     </table>
+    <form action="{% url "coupons:apply" %}" method="POST" class="bg-dark text-light float-end p-2 rounded">
+        {{ coupon_apply_form }}
+        <input type="submit" value="Apply" class="btn btn-dark bg-gradient">
+        {% csrf_token %}
+    </form>
+
     <p class="text-right">
         <a href="{% url "shop:product_list" %}" class="btn btn-dark">Continue shopping</a>
         <a href="{% url 'orders:order_create' %}" class="btn btn-dark">Checkout</a>
