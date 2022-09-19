@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-
+{% load i18n %}
 {% load static %}
 {% block title %}
 {{ product.name }}
@@ -14,7 +14,7 @@
         <img class="rounded" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
     <form action="{% url "cart:cart_add" product.id %}" method="POST">
     {% csrf_token %}
-    <input type="submit" class="btn btn-light-outline text-light bg-gradient rounded mt-2" value="Add to cart {{ product.price }}₽">
+    <input type="submit" class="btn btn-light-outline text-light bg-gradient rounded mt-2" value="{% trans "Add to cart" %}">
         {{ cart_product_form }}
     </form>
     </div>

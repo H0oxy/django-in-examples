@@ -1,43 +1,49 @@
 {% extends "shop/base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}
-    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    {% if category %}{{ category.name }}{% else %}{% trans "Products" %}{% endif %}
 {% endblock %}
 {% block content %}
-<div id="sidebar">
-<h3 class="">Categories</h3>
+    <div id="sidebar">
+        <h3 class="">{% trans "Categories" %}</h3>
 
-<ul class="list-group float-start " style="width: 13rem; height: 100%; margin-right: 4px; margin-top: 0.8rem;">
-    <li class="list-group-item bg-dark" style="--bs-bg-opacity: .95;" {% if not category %}{% endif %}>
-        <a href="{% url 'shop:product_list' %}" class="link-light">All</a>
-    </li>
-    {% for c in categories %}
-    <li class="list-group-item bg-dark" style="--bs-bg-opacity: .95;" {% if category.slug == c.slug %} {% endif %}>
-        <a href="{{ c.get_absolute_url }}" class="link-light">{{ c.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
-</div>
+        <ul class="list-group float-start " style="width: 13rem; height: 100%; margin-right: 4px; margin-top: 0.8rem;">
+            <li class="list-group-item bg-dark" style="--bs-bg-opacity: .95;" {% if not category %}{% endif %}>
+                <a href="{% url 'shop:product_list' %}" class="link-light">{% trans "All" %}</a>
+            </li>
+            {% for c in categories %}
+                <li class="list-group-item bg-dark" style="--bs-bg-opacity: .95;"
+                        {% if category.slug == c.slug %} {% endif %}>
+                    <a href="{{ c.get_absolute_url }}" class="link-light">
+                        {% blocktrans with name=c.name %}
+                            {{ name }}
+                        {% endblocktrans %}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 
 
-<div id="main" class="text-center product-list float-top" style="margin-top: -3rem">
-<h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
-</div>
+    <div id="main" class="text-center product-list float-top" style="margin-top: -3rem">
+        <h1>{% if category %}{{ category.name }}{% else %}{% trans "Products" %}{% endif %}</h1>
+    </div>
 
 
-{% for product in products %}
-    <div class="card bg-dark bg-gradient" style="width: 12rem; float: left; margin: 4px;">
-            <a href="{{ product.get_absolute_url }}" style="text-decoration: none;">
-                <img class="rounded-top" style="margin-left:-1px; width: 12rem" src="{% if product.image %}{{ product.image.url }}{% else %}{% static '/img/no_image.png' %}{% endif %}">
+    {% for product in products %}
+        <div class="card bg-dark bg-gradient" style="width: 12rem; float: left; margin: 4px;">
+            <a href="{{ product.get_absolute_url }}">
+                <img class="rounded-top" style="margin-left:-1px; width: 12rem" src="
+                        {% if product.image %}{{ product.image.url }}{% else %}{% static '/img/no_image.png' %}{% endif %}">
             </a>
-      <div class="card-body shadow">
-            <a href="{{ product.get_absolute_url }}" class="link-light">{{ product.name }}</a>
-          <span class="total text-light" style="float: right">
+            <div class="card-body shadow">
+                <a href="{{ product.get_absolute_url }}" class="link-light">{{ product.name }}</a>
+                <span class="total text-light" style="float: right">
               {{ product.price }}₽
           </span>
-      </div>
-    </div>
-{% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 
 {% endblock %}
