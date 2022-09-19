@@ -25,12 +25,23 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <div class="selected nav-item">
-                    <a href="#" class="nav-link"></a>
+                    <a href="#" class="nav-link">-</a>
                 </div>
             </div>
         </div>
+        <div class="navbar-nav">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <div class="selected nav-item">
+                    <a href="/{{ language.code }}/" class="nav-link" {% if language.code == LANGUAGE_CODE %}{% endif %}>{{ language.name_local.title }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
         <div style="float: right;">
-            <a href="#" class="link-light btn"># Logout</a>
+
         </div>
     </div>
 </nav>
