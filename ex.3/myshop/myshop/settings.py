@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'payment',
     'coupons',
     'rosetta',
+    'parler',
 
 ]
 
@@ -164,6 +165,15 @@ Configuration.configure(
     BRAINTREE_PRIVATE_KEY
 )
 
-
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'es'},
+    ),
+    'default': {
+        'fallback': 'en',
+        'hide_untranslated': False,
+    }
+}
 
 
