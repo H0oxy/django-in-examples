@@ -1,14 +1,38 @@
-input{
-    border-radius: 5px;
-    padding: 5px;
+input, select, textarea {
+    border:1px solid #ccc;
+    border-bottom:3px solid #ccc;
+    padding:8px 12px;
+    font-size:16px;
+    font-family:'Roboto', sans-serif;
+    float:left;
+    clear:both;
+    width:300px;
 }
 
-.course-info{
-    width: 15rem;
-    background-color: #3875d7;
+.module {
+    padding:10px 20px;
+    float:left;
+    width:600px;
 }
 
-option, select{
-    border-radius: 5px;
-    padding: 5px;
+.module h3 {
+    margin:20px 0 0;
+    padding:0;
+    width:100%;
+}
+
+.module p {
+    margin:10px 0 20px;
+    width:100%;
+    float:left;
+}
+
+.container textarea {
+    padding-bottom: 20px;
+}
+
+label {
+    float:left;
+    clear:both;
+    margin:0 0 8px 0;
 }
