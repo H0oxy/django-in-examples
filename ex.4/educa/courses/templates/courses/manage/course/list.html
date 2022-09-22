@@ -8,7 +8,10 @@
                 <h3>{{ course.title }}</h3>
                     <a href="{% url "course_edit" course.id %}" class="btn btn-primary">Edit</a>
                     <a href="{% url "course_module_update" course.id %}" class="btn btn-primary">Edit modules</a>
-                    <a href="{% url "course_delete" course.id %}" class="btn btn-danger">Delete</a>
+                    {% if course.modules.count > 0 %}
+                        <a href="{% url "module_content_list" course.modules.first.id %}" class="btn btn-primary"> Manage contents</a>
+                    {% endif %}
+                <a href="{% url "course_delete" course.id %}" class="btn btn-outline-danger">Delete</a>
             </div>
             {% empty %}
             <p>You haven't created any courses yet.</p>
