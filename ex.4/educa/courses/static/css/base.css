@@ -2,3 +2,13 @@ input{
     border-radius: 5px;
     padding: 5px;
 }
+
+.course-info{
+    width: 15rem;
+    background-color: #3875d7;
+}
+
+option, select{
+    border-radius: 5px;
+    padding: 5px;
+}
