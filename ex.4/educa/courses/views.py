@@ -11,6 +11,7 @@ from django.db.models import Count
 from .models import Course, Module, Content, Subject
 from .forms import ModuleFormSet
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
+from students.forms import CourseEnrollForm
 
 
 class OwnerMixin(object):
@@ -128,6 +129,7 @@ class ContentDeleteView(View):
 
 class ModuleContentListView(TemplateResponseMixin, View):
     template_name = 'courses/manage/module/content_list.html'
+
     def get(self, request, module_id):
         module = get_object_or_404(Module, id=module_id, course__owner=request.user)
         return self.render_to_response({'module': module})
@@ -163,3 +165,8 @@ class CourseListView(TemplateResponseMixin, View):
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/course/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseDetailView, self).get_context_data(**kwargs)
+        context['enroll_form'] = CourseEnrollForm(initial={'course': self.object})
+        return context
