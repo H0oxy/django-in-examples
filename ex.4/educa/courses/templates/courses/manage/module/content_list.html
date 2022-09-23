@@ -9,10 +9,9 @@
         <h1>Course "{{ course.title }}"</h1>
         <div class="p-2 bg-secondary text-light rounded float-start" style="width: 15rem;">
             <h3>Modules</h3>
-            <ul class="list-group" style="width: 14rem; float: left;">
+            <ul id="modules" class="list-group" style="width: 14rem; float: left;" >
                 {% for m in course.modules.all %}
-                    <li class="list-group-item" data-id="{{ m.id }}" {% if m == module %}
-                        class="selected"{% endif %}>
+                    <li class="list-group-item" data-id="{{ m.id }}" {% if m == module %} class="selected"{% endif %}>
                         <a href="{% url "module_content_list" m.id %}" class="link-dark">
                             <span>
                             Module <span class="order">{{ m.order|add:1 }}</span>
@@ -33,14 +32,15 @@
             <h3>Module contents:</h3>
             <div id="module-contents">
                 {% for content in module.contents.all %}
-                    <div data-id="{{ content.id }}" style="width: 18rem;" class="bg-dark">
+                    <div data-id="{{ content.id }}" style="width: 60rem;" class="bg-dark">
                         {% with item=content.item %}
-                            <div class="float-start p-1 m-1" style="width:9rem">{{ item }} [{{ item|model_name }}]
-                                <a href="{% url "module_content_update" module.id item|model_name item.id %}" class="btn btn-dark mb-1 float-end">Edit</a>
+                            <div class="float-start p-2 m-1 rounded shadow" style="width:15rem;">
+                                    {{ item }} [{{ item|model_name }}]
                                 <form action="{% url "module_content_delete" content.id %}" method="POST">
-                                    <input type="submit" value="Delete" class="btn btn-danger float-end" style="width:100%">
+                                    <input type="submit" value="Delete" class="btn btn-outline-danger float-end" style="width:50%">
                                     {% csrf_token %}
                                 </form>
+                                <a href="{% url "module_content_update" module.id item|model_name item.id %}" class="btn btn-outline-dark mb-1 me-2 float-end">Edit</a>
                             </div>
                         {% endwith %}
                     </div>
@@ -66,4 +66,43 @@
         </div>
     {% endwith %}
     </div>
+{% endblock %}
+
+{% block domready %}
+  $('#modules').sortable({
+      stop: function(event, ui) {
+          modules_order = {};
+          $('#modules').children().each(function(){
+              // update the order field
+              $(this).find('.order').text($(this).index() + 1);
+              // associate the module's id with its order
+              modules_order[$(this).data('id')] = $(this).index();
+          });
+          $.ajax({
+              type: 'POST',
+              url: '{% url "module_order" %}',
+              contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+                 data: JSON.stringify(modules_order)
+             });
+      }
+  });
+
+  $('#module-contents').sortable({
+      stop: function(event, ui) {
+          contents_order = {};
+          $('#module-contents').children().each(function(){
+              // associate the module's id with its order
+              contents_order[$(this).data('id')] = $(this).index();
+          });
+
+          $.ajax({
+              type: 'POST',
+              url: '{% url "content_order" %}',
+              contentType: 'application/json; charset=utf-8',
+              dataType: 'json',
+              data: JSON.stringify(contents_order),
+          });
+      }
+  });
 {% endblock %}
