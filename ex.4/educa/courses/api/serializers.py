@@ -1,8 +1,5 @@
 from rest_framework import serializers
 from ..models import Subject, Course, Module
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
-from rest_framework.response import Response
 
 
 class ModuleSerializer(serializers.ModelSerializer):
@@ -25,9 +22,5 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'slug']
 
 
-class CourseEnrollView(APIView):
-    def post(self, request, pk, format=None):
-        course = get_object_or_404(Course, pk=pk)
-        course.students.add(request.user)
-        return Response({'enrolled': True})
+
 
